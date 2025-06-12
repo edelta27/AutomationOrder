@@ -1,7 +1,7 @@
 package pl.edytab.automationorder.dto;
 
 import jakarta.validation.constraints.NotNull;
-import pl.edytab.automationorder.entities.ProductCategory;
+import pl.edytab.automationorder.entity.ProductCategory;
 
 import java.math.BigDecimal;
 

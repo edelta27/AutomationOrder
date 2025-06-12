@@ -1,4 +1,4 @@
-package pl.edytab.automationorder.entities;
+package pl.edytab.automationorder.entity;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
