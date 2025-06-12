@@ -9,20 +9,14 @@ public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne(optional = false)
     private Product product;
-
     @ManyToOne
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
-
     private Integer quantity;
-
     private BigDecimal netPrice;
-
     private BigDecimal vatRate;
-
     private BigDecimal grossPrice;
 
     public OrderItem() {
