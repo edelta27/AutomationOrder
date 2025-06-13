@@ -17,19 +17,19 @@ public class Product {
     private String name;
     private ProductCategory category;
     private BigDecimal netPrice;
-    private BigDecimal vatRare;
+    private BigDecimal vatRate;
 
     public Product() {
     }
 
     public Product(Long id, String symbol, String name, ProductCategory category,
-                   BigDecimal netPrice, BigDecimal vatRare) {
+                   BigDecimal netPrice, BigDecimal vatRate) {
         this.id = id;
         this.symbol = symbol;
         this.name = name;
         this.category = category;
         this.netPrice = netPrice;
-        this.vatRare = vatRare;
+        this.vatRate = vatRate;
     }
 
     public Long getId() {
@@ -72,12 +72,12 @@ public class Product {
         this.netPrice = netPrice;
     }
 
-    public BigDecimal getVatRare() {
-        return vatRare;
+    public BigDecimal getVatRate() {
+        return vatRate;
     }
 
-    public void setVatRare(BigDecimal vatRare) {
-        this.vatRare = vatRare;
+    public void setVatRate(BigDecimal vatRare) {
+        this.vatRate = vatRare;
     }
 
 }
