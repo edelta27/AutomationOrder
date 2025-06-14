@@ -30,7 +30,7 @@ public class CustomerController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageResponseDto> postCustomer(@RequestBody @Valid CustomerDto customerDto){
+    public ResponseEntity<MessageResponseDto> addCustomer(@RequestBody @Valid CustomerDto customerDto){
         customerService.createCustomer(customerDto);
         return ResponseEntity.ok(new MessageResponseDto("Customer added successfully", HttpStatus.OK));
     }

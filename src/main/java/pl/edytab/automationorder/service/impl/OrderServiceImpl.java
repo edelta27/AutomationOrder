@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @Log4j2
@@ -49,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
                     .orElseThrow(() -> new RuntimeException("Product not found"));
 
             BigDecimal netPrice = product.getNetPrice();
-            BigDecimal vatRate = product.getVatRate();
+            BigDecimal vatRate = product.getVatRare();
             BigDecimal quantity = BigDecimal.valueOf(itemDto.quantity());
             BigDecimal grossPrice = netPrice.multiply(quantity).multiply(BigDecimal.ONE.add(vatRate));
 
