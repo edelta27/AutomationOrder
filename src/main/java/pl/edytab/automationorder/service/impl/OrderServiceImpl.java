@@ -3,6 +3,7 @@ package pl.edytab.automationorder.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.edytab.automationorder.dto.OrderDto;
 import pl.edytab.automationorder.dto.OrderItemDto;
 import pl.edytab.automationorder.entity.Customer;
@@ -30,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private final ProductRepository productRepository;
     private final OrderMapper orderMapper;
 
+    @Transactional
     @Override
     public void createOrder(OrderDto orderDto) {
         Customer customer = customerRepository.findById(orderDto.customer().id())
