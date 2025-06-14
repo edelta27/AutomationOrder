@@ -74,4 +74,4 @@ Projekt demonstruje m.in.:
    
    POST /orders — stwórz zamówienie
    
-   GET /orders/{orderNumber} — pobierz zamówienie po numerze
+   GET /orders/{id} — pobierz zamówienie po numerze
