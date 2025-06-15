@@ -55,7 +55,7 @@ Projekt demonstruje m.in.:
 1. Sklonuj repozytorium:
    
    ```bash
-   git clone https://github.com/twoj-login/AutomationOrder.git
+   git clone https://github.com/edelta27/AutomationOrder.git
    cd AutomationOrder
 3. Skonfiguruj bazę PostgreSQL w application.properties (lub application.yml):
    ```properties
