@@ -10,6 +10,7 @@ import pl.edytab.automationorder.entity.Customer;
 import pl.edytab.automationorder.entity.Order;
 import pl.edytab.automationorder.entity.OrderItem;
 import pl.edytab.automationorder.entity.Product;
+import pl.edytab.automationorder.exception.OrderNotFoundException;
 import pl.edytab.automationorder.mapper.OrderMapper;
 import pl.edytab.automationorder.repository.CustomerRepository;
 import pl.edytab.automationorder.repository.OrderRepository;
@@ -79,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto getOrderById(Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new RuntimeException("Order with id " + id + " not found"));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
         return orderMapper.toDto(order);
     }
 
