@@ -35,5 +35,11 @@ public class CustomerController {
         return ResponseEntity.ok(new MessageResponseDto("Customer added successfully", HttpStatus.OK));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MessageResponseDto> deleteCustomer(@PathVariable Long id){
+        customerService.deleteCustomer(id);
+        return ResponseEntity.ok(new MessageResponseDto("You deleted customer with id: " + id, HttpStatus.OK));
+    }
+
 
 }
