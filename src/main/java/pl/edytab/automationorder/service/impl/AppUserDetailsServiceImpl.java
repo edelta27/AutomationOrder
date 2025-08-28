@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import pl.edytab.automationorder.entity.User;
+import pl.edytab.automationorder.exception.ResourceNotFoundException;
 import pl.edytab.automationorder.repository.UserRepository;
 import pl.edytab.automationorder.service.AppUserDetailsService;
 
@@ -21,7 +22,7 @@ public class AppUserDetailsServiceImpl implements AppUserDetailsService, UserDet
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException{
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("No user: " + email));
+                .orElseThrow(() -> new ResourceNotFoundException("No user: " + email));
         Collection<? extends GrantedAuthority> authorities =
                 user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))

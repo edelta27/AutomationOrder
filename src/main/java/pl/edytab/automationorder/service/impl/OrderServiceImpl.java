@@ -10,7 +10,7 @@ import pl.edytab.automationorder.entity.Customer;
 import pl.edytab.automationorder.entity.Order;
 import pl.edytab.automationorder.entity.OrderItem;
 import pl.edytab.automationorder.entity.Product;
-import pl.edytab.automationorder.exception.OrderNotFoundException;
+import pl.edytab.automationorder.exception.ResourceNotFoundException;
 import pl.edytab.automationorder.mapper.OrderMapper;
 import pl.edytab.automationorder.repository.CustomerRepository;
 import pl.edytab.automationorder.repository.OrderRepository;
@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void createOrder(OrderDto orderDto) {
         Customer customer = customerRepository.findById(orderDto.customer().id())
-                .orElseThrow(() -> new RuntimeException("Customer not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         Order order = new Order();
         order.setCustomer(customer);
         order.setCreatedAt(LocalDateTime.now());
@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService {
 
         for (OrderItemDto itemDto : orderDto.orderItems()) {
             Product product = productRepository.findById(itemDto.product().id())
-                    .orElseThrow(() -> new RuntimeException("Product not found"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
             BigDecimal netPrice = product.getNetPrice();
             BigDecimal vatRate = product.getVatRare();
@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto getOrderById(Long id) {
-        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
+        Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Order with id" + id + " not found"));
         return orderMapper.toDto(order);
     }
 

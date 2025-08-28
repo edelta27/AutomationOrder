@@ -5,10 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edytab.automationorder.dto.CustomerDto;
-import pl.edytab.automationorder.dto.ProductDto;
 import pl.edytab.automationorder.entity.Customer;
-import pl.edytab.automationorder.entity.Product;
-import pl.edytab.automationorder.exception.CustomerNotFoundException;
+import pl.edytab.automationorder.exception.ResourceNotFoundException;
 import pl.edytab.automationorder.mapper.CustomerMapper;
 import pl.edytab.automationorder.repository.CustomerRepository;
 import pl.edytab.automationorder.service.CustomerService;
@@ -39,8 +37,8 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     @Transactional
     public void deleteCustomer(Long id) {
-        Customer plant = customerRepository.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException("Plant with id" + id + " not found"));
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Customer with id" + id + " not found"));
         customerRepository.deleteById(id);
     }
 }
