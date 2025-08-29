@@ -1,9 +1,8 @@
 package pl.edytab.automationorder.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import pl.edytab.automationorder.enums.ProductCategory;
+import pl.edytab.automationorder.enums.ProductStatus;
 
 import java.math.BigDecimal;
 
@@ -15,9 +14,13 @@ public class Product {
     private Long id;
     private String symbol;
     private String name;
+    @Enumerated(EnumType.STRING)
     private ProductCategory category;
     private BigDecimal netPrice;
     private BigDecimal vatRare;
+
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status = ProductStatus.ACTIVE;
 
     public Product() {
     }
@@ -30,6 +33,7 @@ public class Product {
         this.category = category;
         this.netPrice = netPrice;
         this.vatRare = vatRare;
+        this.status = ProductStatus.ACTIVE;
     }
 
     public Long getId() {
@@ -80,4 +84,11 @@ public class Product {
         this.vatRare = vatRare;
     }
 
+    public ProductStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ProductStatus status) {
+        this.status = status;
+    }
 }

@@ -2,7 +2,8 @@ package pl.edytab.automationorder.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import pl.edytab.automationorder.entity.ProductCategory;
+import pl.edytab.automationorder.enums.ProductCategory;
+import pl.edytab.automationorder.enums.ProductStatus;
 
 import java.math.BigDecimal;
 
@@ -16,5 +17,7 @@ public record ProductDto(Long id,
                          @NotNull(message = "Net Price is required")
                          BigDecimal netPrice,
                          @NotNull(message = "VAT rare is required")
-                         BigDecimal vatRare) {
+                         BigDecimal vatRare,
+
+                        ProductStatus status) {
 }

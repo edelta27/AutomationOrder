@@ -5,18 +5,23 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import pl.edytab.automationorder.dto.ProductDto;
 import pl.edytab.automationorder.entity.Product;
-import pl.edytab.automationorder.entity.ProductCategory;
+import pl.edytab.automationorder.enums.ProductCategory;
+import pl.edytab.automationorder.enums.ProductStatus;
 import pl.edytab.automationorder.mapper.ProductMapper;
 import pl.edytab.automationorder.repository.ProductRepository;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
+import static java.util.List.of;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
@@ -38,7 +43,8 @@ class ProductServiceImplTest {
                 "Czujnik indukcyjny",
                 ProductCategory.SENSOR,
                 new BigDecimal("157.00"),
-                new BigDecimal("0.23")
+                new BigDecimal("0.23"),
+                ProductStatus.ACTIVE
         );
         Product product = new Product();
 
@@ -55,23 +61,28 @@ class ProductServiceImplTest {
     @Test
     void shouldReturnAllProducts() {
         // given
-        List<Product> products = List.of(new Product(), new Product());
-        List<ProductDto> dtos = List.of(
-                new ProductDto(1L, "XS3F-M8PUR4S 2M", "Cable", ProductCategory.CABLE, new BigDecimal("110.00"), new BigDecimal("0.23")),
-                new ProductDto(2L, "G2R-1-S 24DC", "Relay", ProductCategory.RELAY, new BigDecimal("21.00"), new BigDecimal("0.23"))
+        Authentication authentication =
+                new UsernamePasswordAuthenticationToken("admin", "password",
+                        Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")));
+
+        List<Product> products = of(new Product(), new Product());
+        List<ProductDto> dtos = of(
+                new ProductDto(1L, "XS3F-M8PUR4S 2M", "Cable", ProductCategory.CABLE, new BigDecimal("110.00"), new BigDecimal("0.23"), ProductStatus.ACTIVE),
+                new ProductDto(2L, "G2R-1-S 24DC", "Relay", ProductCategory.RELAY, new BigDecimal("21.00"), new BigDecimal("0.23"), ProductStatus.ACTIVE)
         );
 
         when(productRepository.findAll()).thenReturn(products);
         when(productMapper.toDtoList(products)).thenReturn(dtos);
 
         // when
-        List<ProductDto> result = productService.getAllProduct();
+        List<ProductDto> result = productService.getAllProduct(authentication);
 
         // then
         assertEquals(2, result.size());
         assertEquals("Cable", result.get(0).name());
         verify(productRepository).findAll();
         verify(productMapper).toDtoList(products);
+        assertEquals(ProductStatus.ACTIVE, result.get(0).status());
     }
 
 

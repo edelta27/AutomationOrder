@@ -1,4 +1,4 @@
-package pl.edytab.automationorder.entity;
+package pl.edytab.automationorder.enums;
 
 public enum ProductCategory {
     SENSOR, INVERTER, CONTROLLER, LIMIT_SWITCH, RELAY, ENCODER,
