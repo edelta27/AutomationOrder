@@ -1,6 +1,7 @@
 package pl.edytab.automationorder.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import pl.edytab.automationorder.enums.ProductCategory;
 import pl.edytab.automationorder.enums.ProductStatus;
 
@@ -18,15 +19,16 @@ public class Product {
     private ProductCategory category;
     private BigDecimal netPrice;
     private BigDecimal vatRare;
-
     @Enumerated(EnumType.STRING)
     private ProductStatus status = ProductStatus.ACTIVE;
+    @Min(0)
+    private Integer quantity = 0;
 
     public Product() {
     }
 
     public Product(Long id, String symbol, String name, ProductCategory category,
-                   BigDecimal netPrice, BigDecimal vatRare) {
+                   BigDecimal netPrice, BigDecimal vatRare, Integer quantity) {
         this.id = id;
         this.symbol = symbol;
         this.name = name;
@@ -34,6 +36,7 @@ public class Product {
         this.netPrice = netPrice;
         this.vatRare = vatRare;
         this.status = ProductStatus.ACTIVE;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -90,5 +93,13 @@ public class Product {
 
     public void setStatus(ProductStatus status) {
         this.status = status;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

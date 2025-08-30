@@ -50,16 +50,32 @@ public class OrderServiceImpl implements OrderService {
             Product product = productRepository.findById(itemDto.product().id())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
+            int available = product.getQuantity();
+            int requested = itemDto.quantity();
+
+            if (requested <= 0) {
+                throw new IllegalArgumentException("Quantity must be greater than 0");
+            }
+
+            int finalQuantity;
+            if (requested > available) {
+                finalQuantity = available;
+                product.setQuantity(0);
+            } else {
+                finalQuantity = requested;
+                product.setQuantity(available - requested);
+            }
+
             BigDecimal netPrice = product.getNetPrice();
             BigDecimal vatRate = product.getVatRare();
-            BigDecimal quantity = BigDecimal.valueOf(itemDto.quantity());
-            BigDecimal grossPrice = netPrice.multiply(quantity).multiply(BigDecimal.ONE.add(vatRate));
+            BigDecimal quantityBD = BigDecimal.valueOf(finalQuantity);
+            BigDecimal grossPrice = netPrice.multiply(quantityBD).multiply(BigDecimal.ONE.add(vatRate));
 
             OrderItem item = new OrderItem();
             item.setProduct(product);
             item.setOrder(order);
-            item.setQuantity(itemDto.quantity());
-            item.setNetPrice(netPrice.multiply(quantity));
+            item.setQuantity(finalQuantity);
+            item.setNetPrice(netPrice.multiply(quantityBD));
             item.setVatRate(vatRate);
             item.setGrossPrice(grossPrice);
 
@@ -67,15 +83,18 @@ public class OrderServiceImpl implements OrderService {
             totalGross = totalGross.add(grossPrice);
 
             items.add(item);
+
+            productRepository.save(product);
         }
 
-        String orderNumber = order.getId() + "/" + LocalDate.now().getYear();
-        order.setOrderNumber(orderNumber);
         order.setOrderItems(items);
         order.setTotalNet(totalNet);
         order.setTotalGross(totalGross);
 
         orderRepository.save(order);
+
+        String orderNumber = order.getId() + "/" + LocalDate.now().getYear();
+        order.setOrderNumber(orderNumber);
     }
 
     @Override

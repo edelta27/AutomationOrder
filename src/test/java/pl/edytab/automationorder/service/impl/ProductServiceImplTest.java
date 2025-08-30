@@ -44,6 +44,7 @@ class ProductServiceImplTest {
                 ProductCategory.SENSOR,
                 new BigDecimal("157.00"),
                 new BigDecimal("0.23"),
+                0,
                 ProductStatus.ACTIVE
         );
         Product product = new Product();
@@ -67,8 +68,8 @@ class ProductServiceImplTest {
 
         List<Product> products = of(new Product(), new Product());
         List<ProductDto> dtos = of(
-                new ProductDto(1L, "XS3F-M8PUR4S 2M", "Cable", ProductCategory.CABLE, new BigDecimal("110.00"), new BigDecimal("0.23"), ProductStatus.ACTIVE),
-                new ProductDto(2L, "G2R-1-S 24DC", "Relay", ProductCategory.RELAY, new BigDecimal("21.00"), new BigDecimal("0.23"), ProductStatus.ACTIVE)
+                new ProductDto(1L, "XS3F-M8PUR4S 2M", "Cable", ProductCategory.CABLE, new BigDecimal("110.00"), new BigDecimal("0.23"), 0, ProductStatus.ACTIVE),
+                new ProductDto(2L, "G2R-1-S 24DC", "Relay", ProductCategory.RELAY, new BigDecimal("21.00"), new BigDecimal("0.23"), 0, ProductStatus.ACTIVE)
         );
 
         when(productRepository.findAll()).thenReturn(products);

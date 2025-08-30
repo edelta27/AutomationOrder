@@ -18,6 +18,7 @@ public record ProductDto(Long id,
                          BigDecimal netPrice,
                          @NotNull(message = "VAT rare is required")
                          BigDecimal vatRare,
-
+                         @NotNull(message = "Quantity is required")
+                        Integer quantity,
                         ProductStatus status) {
 }
