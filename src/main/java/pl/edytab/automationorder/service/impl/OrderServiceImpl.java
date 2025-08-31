@@ -5,7 +5,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.edytab.automationorder.dto.OrderDto;
-import pl.edytab.automationorder.dto.OrderItemDto;
+import pl.edytab.automationorder.dto.OrderItemRequestDto;
+import pl.edytab.automationorder.dto.OrderRequestDto;
 import pl.edytab.automationorder.entity.Customer;
 import pl.edytab.automationorder.entity.Order;
 import pl.edytab.automationorder.entity.OrderItem;
@@ -34,8 +35,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Transactional
     @Override
-    public void createOrder(OrderDto orderDto) {
-        Customer customer = customerRepository.findById(orderDto.customer().id())
+    public OrderDto createOrder(OrderRequestDto orderRequestDto) {
+        Customer customer = customerRepository.findById(orderRequestDto.customerId())
                 .orElseThrow(() -> new ResourceNotFoundException("Customer not found"));
         Order order = new Order();
         order.setCustomer(customer);
@@ -46,8 +47,8 @@ public class OrderServiceImpl implements OrderService {
         BigDecimal totalGross = BigDecimal.ZERO;
         List<OrderItem> items = new ArrayList<>();
 
-        for (OrderItemDto itemDto : orderDto.orderItems()) {
-            Product product = productRepository.findById(itemDto.product().id())
+        for (OrderItemRequestDto itemDto : orderRequestDto.items()) {
+            Product product = productRepository.findById(itemDto.productId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
             int available = product.getQuantity();
@@ -95,6 +96,10 @@ public class OrderServiceImpl implements OrderService {
 
         String orderNumber = order.getId() + "/" + LocalDate.now().getYear();
         order.setOrderNumber(orderNumber);
+
+        Order createOrder = orderRepository.save(order);
+
+        return orderMapper.toDto(createOrder);
     }
 
     @Override

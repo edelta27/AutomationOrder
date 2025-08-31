@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.edytab.automationorder.dto.OrderDto;
+import pl.edytab.automationorder.dto.OrderRequestDto;
 import pl.edytab.automationorder.dto.response.MessageResponseDto;
+import pl.edytab.automationorder.entity.Order;
 import pl.edytab.automationorder.service.OrderService;
 
 
@@ -28,8 +30,8 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<MessageResponseDto> addOrder(@RequestBody @Valid OrderDto orderDto){
-        orderService.createOrder(orderDto);
-        return ResponseEntity.ok(new MessageResponseDto("Order added successfully", HttpStatus.OK));
+    public ResponseEntity<OrderDto> addOrder(@RequestBody @Valid OrderRequestDto orderRequestDtoDto){
+        OrderDto newOrder = orderService.createOrder(orderRequestDtoDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newOrder);
     }
 }

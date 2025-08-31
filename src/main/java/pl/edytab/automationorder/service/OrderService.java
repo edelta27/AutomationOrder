@@ -1,12 +1,11 @@
 package pl.edytab.automationorder.service;
 
 import pl.edytab.automationorder.dto.OrderDto;
-import pl.edytab.automationorder.entity.Order;
+import pl.edytab.automationorder.dto.OrderRequestDto;
 
-import java.util.List;
 
 public interface OrderService {
-    void createOrder(OrderDto orderDto);
+    OrderDto createOrder(OrderRequestDto orderRequestDto);
 
     OrderDto getOrderById(Long id);
 }
