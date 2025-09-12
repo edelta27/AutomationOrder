@@ -30,7 +30,7 @@ Projekt demonstruje m.in.:
 ---
 ## Screen of Products Page
 
-![Products Grid](images/automation-shop.png)
+<img width="800" height="626" alt="automation-shop" src="https://github.com/user-attachments/assets/e4e24cde-c742-4572-8640-d039f4bdbb20" />
 
 ## Funkcjonalności
 
