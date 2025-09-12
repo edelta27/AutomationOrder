@@ -17,12 +17,18 @@ public class Product {
     private String name;
     @Enumerated(EnumType.STRING)
     private ProductCategory category;
+    private String subcategory;
+    private String description;
     private BigDecimal netPrice;
     private BigDecimal vatRare;
     @Enumerated(EnumType.STRING)
     private ProductStatus status = ProductStatus.ACTIVE;
     @Min(0)
     private Integer quantity = 0;
+    private String coo;
+    private String family;
+
+    private String imageUrl;
 
     public Product() {
     }
@@ -37,6 +43,25 @@ public class Product {
         this.vatRare = vatRare;
         this.status = ProductStatus.ACTIVE;
         this.quantity = quantity;
+    }
+
+    public Product(Long id, String symbol, String name, ProductCategory category,
+                   String subcategory, String description, BigDecimal netPrice,
+                   BigDecimal vatRare, ProductStatus status, Integer quantity,
+                   String coo, String family, String imageUrl) {
+        this.id = id;
+        this.symbol = symbol;
+        this.name = name;
+        this.category = category;
+        this.subcategory = subcategory;
+        this.description = description;
+        this.netPrice = netPrice;
+        this.vatRare = vatRare;
+        this.status = status;
+        this.quantity = quantity;
+        this.coo = coo;
+        this.family = family;
+        this.imageUrl = imageUrl;
     }
 
     public Long getId() {
@@ -101,5 +126,45 @@ public class Product {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getSubcategory() {
+        return subcategory;
+    }
+
+    public void setSubcategory(String subcategory) {
+        this.subcategory = subcategory;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCoo() {
+        return coo;
+    }
+
+    public void setCoo(String coo) {
+        this.coo = coo;
+    }
+
+    public String getFamily() {
+        return family;
+    }
+
+    public void setFamily(String family) {
+        this.family = family;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

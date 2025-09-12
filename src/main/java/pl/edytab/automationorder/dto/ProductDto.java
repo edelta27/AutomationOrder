@@ -14,11 +14,16 @@ public record ProductDto(Long id,
                          String name,
                          @NotNull(message = "category must not be null, choose: SENSOR, INVERTER, CONTROLLER, LIMIT_SWITCH, RELAY, ENCODER,REGULATOR, POWER_SUPPLY, COUNTER, CONNECTOR, CABLE, CONTACTOR, LICENSE, ROBOT, CAMERA")
                          ProductCategory category,
+                         String subcategory,
+                         String description,
                          @NotNull(message = "Net Price is required")
                          BigDecimal netPrice,
                          @NotNull(message = "VAT rare is required")
                          BigDecimal vatRare,
                          @NotNull(message = "Quantity is required")
-                        Integer quantity,
-                        ProductStatus status) {
+                         Integer quantity,
+                         ProductStatus status,
+                         String coo,
+                         String family,
+                         String imageUrl) {
 }

@@ -3,9 +3,10 @@
 ## Opis projektu
 
 AutomationOrder to prosty system zamówień (Order Management System) stworzony w Spring Boot.  
-Aplikacja umożliwia zarządzanie klientami, produktami oraz składanie i przeglądanie zamówień wraz z pozycjami zamówienia (Order Items).  
+Aplikacja umożliwia przeglądanie produktów w formie kafelków z obrazkami, wyszukiwanie i filtrowanie, a w przyszłości będzie zawierać logowanie, koszyk i składanie zamówień. 
 
 Projekt demonstruje m.in.:  
+- Wyświetlanie danych z bazy w frontendzie (Thymeleaf)
 - Modelowanie relacji w bazie PostgreSQL (Entity, DTO, MapStruct)  
 - Budowę REST API ze Spring Web  
 - Walidację danych wejściowych (Bean Validation)  
@@ -20,17 +21,21 @@ Projekt demonstruje m.in.:
 - Java 17  
 - Spring Boot 3.x  
 - PostgreSQL  
+- Thymeleaf (frontend)
 - MapStruct  
 - Hibernate Validator (Bean Validation)  
 - Mockito, JUnit 5  
 - Maven  
 
 ---
+## Screen of Products Page
+
+![Products Grid](images/automation-shop.png)
 
 ## Funkcjonalności
 
 - **Zarządzanie klientami:** dodawanie, pobieranie listy klientów  
-- **Zarządzanie produktami:** dodawanie, pobieranie listy produktów  
+- **Zarządzanie produktami:** dodawanie, pobieranie listy produktów z kafelkami i zdjęciami
 - **Zamówienia:** tworzenie zamówień z wieloma pozycjami, pobieranie szczegółów zamówienia po numerze  
 - Walidacja danych (np. poprawność pól, niepustość, wartości numeryczne)  
 - Obsługa błędów i czytelne komunikaty  
@@ -46,6 +51,8 @@ Projekt demonstruje m.in.:
 - `dto/` — rekordy DTO (CustomerDto, ProductDto, OrderDto, OrderItemDto)  
 - `entity/` — encje JPA (Customer, Product, Order, OrderItem)  
 - `exception/` — klasy wyjątków i globalny handler (RestControllerAdvice)  
+- `templates/` — widoki Thymeleaf (index.html, produkty)
+- `static/` — zasoby statyczne (obrazy, CSS)
 - `test/` — testy jednostkowe
 
 ---
@@ -57,16 +64,18 @@ Projekt demonstruje m.in.:
    ```bash
    git clone https://github.com/edelta27/AutomationOrder.git
    cd AutomationOrder
-3. Skonfiguruj bazę PostgreSQL w application.properties (lub application.yml):
+2. Skonfiguruj bazę PostgreSQL w application.properties (lub application.yml):
    ```properties
    spring.datasource.url=jdbc:postgresql://localhost:5432/automationorderdb
    spring.datasource.username=postgres
    spring.datasource.password=yourpassword
-   spring.jpa.hibernate.ddl-auto=update
-5. Uruchom aplikację:
+   spring.jpa.hibernate.ddl-auto=create
+   spring.jpa.defer-datasource-initialization=true
+   spring.sql.init.mode=always
+3. Uruchom aplikację:
    ```bash
    ./mvnw spring-boot:run
-6. Testuj API np. przez Postmana lub curl:
+4. Testuj API np. przez Postmana lub curl:
    
    POST /customers — dodaj klienta
    
@@ -75,3 +84,4 @@ Projekt demonstruje m.in.:
    POST /orders — stwórz zamówienie
    
    GET /orders/{id} — pobierz zamówienie po numerze
+5. Otwórz w przeglądarce: http://localhost:8081

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Automation Shop - Products</title>
+</head>
+<body>
+
+<header>
+    <h1>Automation</h1>
+    <nav>
+        <a href="/" style="color:white; margin-right:15px;">Home</a>
+        <a href="/products" style="color:white;">Products</a>
+    </nav>
+</header>
+
+<div class="search-bar">
+    <input type="text" placeholder="Search for products...">
+</div>
+
+<div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h3>Categories</h3>
+        <ul>
+            <li><a href="#">Sensors</a></li>
+            <li><a href="#">PLC Controllers</a></li>
+            <li><a href="#">Switches</a></li>
+            <li><a href="#">Cables</a></li>
+            <li><a href="#">Robotics</a></li>
+        </ul>
+    </aside>
+
+    <!-- Products Grid -->
+    <section class="products" id="products">
+
+    </section>
+</div>
+
+<footer>
+    <p>Automation Shop © 2025</p>
+    <p>Contact: contact@automation.com</p>
+</footer>
+<script>
+    fetch('/products')
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('products');
+            container.innerHTML = "";
+            data.products.forEach(product => {
+                const card = `
+        <div class="product-card">
+        <img src="${product.imageUrl}" alt="${product.name}">
+          <h4>${product.name}</h4>
+          <p>${product.symbol}</p>
+          <p>Category: ${product.category}</p>
+          <p>Price: ${(product.netPrice * 0.23).toFixed(2)} €</p>
+        </div>`;
+                container.innerHTML += card;
+            });
+        })
+        .catch(err => console.error('Błąd pobierania danych:', err));
+</script>
+</body>
+</html>
