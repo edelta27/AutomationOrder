@@ -7,6 +7,7 @@ Aplikacja umożliwia przeglądanie produktów w formie kafelków z obrazkami, wy
 
 Projekt demonstruje m.in.:  
 - Wyświetlanie danych z bazy w frontendzie (Thymeleaf)
+- Logowanie admin i użytkownik(Spring Security)
 - Modelowanie relacji w bazie PostgreSQL (Entity, DTO, MapStruct)  
 - Budowę REST API ze Spring Web  
 - Walidację danych wejściowych (Bean Validation)  
@@ -19,11 +20,12 @@ Projekt demonstruje m.in.:
 ## Technologie
 
 - Java 17  
-- Spring Boot 3.x  
+- Spring Boot 3.x
 - PostgreSQL  
 - Thymeleaf (frontend)
 - MapStruct  
 - Hibernate Validator (Bean Validation)  
+- Spring Security
 - Mockito, JUnit 5  
 - Maven  
 
